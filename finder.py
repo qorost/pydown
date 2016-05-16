@@ -7,6 +7,12 @@ from urlparse import urljoin
 import sys
 import urllib2
 
+
+
+
+
+
+
 def get_url(url,value):
 	if value.startswith("http"):
 		return value
@@ -58,3 +64,21 @@ if __name__ == "__main__":
 	url = "http://csiflabs.cs.ucdavis.edu/~ssdavis/60/"
 	finder = FileFinder(t,url)
 	print finder.find()
+
+
+#New Version design
+
+'''
+1.functions to tell if the tag/attrs
+def mytifiles_filter(filetypes,tags,attrs):
+
+
+class LinkFinder(HTMLParser)
+    def __init__(url,filter)
+
+
+class FileFinder()
+    def __init__(filetypes,url)
+    def make_filter(filetypes)
+    def find()
+'''
