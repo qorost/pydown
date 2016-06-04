@@ -25,7 +25,7 @@ def name_file(url,suffix='pdf'):
     return name
 
 def regulate_filename(name):
-	name = name.replace('?','').replace(':','').replace(' ','')
+	name = name.replace('?','').replace(':','').replace(' ','').replace('*','')
 	return name
 
 if __name__ == "__main__":
