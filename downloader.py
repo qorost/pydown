@@ -1,11 +1,13 @@
 import sys
-import urllib 
-import urllib2 
+import urllib
+import urllib2
 #import requests
 import os.path
 
 import thread
 import threading
+
+import argparse
 
 
 def print_progress(iteration,total,prefix='Progress: ',suffix='Complete',decimals = 2, barlen = 100):
@@ -32,6 +34,38 @@ def print_progress(iteration,total,prefix='Progress: ',suffix='Complete',decimal
         print("\n")
 
 
+class LinkFile():
+    def __init__(self,filename="links.txt"):
+        self.filename = filename
+
+    def saveto(self,links):
+        try:
+            fp = open(self.filename,"w")
+            for i in links:
+                fp.write(i)
+                fp.write("\n")
+            fp.close()
+        except Exception,e:
+            sys.stderr.write("Error in Writing: " + str(e))
+
+    def extractfrom(self,filename=None):
+        links = set()
+        if filename is not None:
+            tmp = filename
+        else:
+            tmp = self.filename
+        try:
+            fp = open(tmp,"r")
+            texts = fp.read().splitlines()
+            for i in texts:
+                links.add(i)
+            fp.close()
+            return links
+        except Exception,e:
+            sys.stderr.write("Error while reading: " + str(e))
+
+
+
 class Downloader():
     def __init__(self,url,filename,overite=False):
       self.url = url
@@ -45,7 +79,7 @@ class Downloader():
         if os.path.exists(os.path.abspath(file_name)) and overite == False:
             print "File Already Existed, skip downloading..."
             return 1
-        try: 
+        try:
             u = urllib2.urlopen(url)
             f = open(file_name, 'wb')
             meta = u.info()
@@ -84,8 +118,8 @@ class MyDownLoadThread(threading.Thread) :
                 self.filename = url.split('/')[-1]
             else :
                 self.filename ='test.pdf'
-                
-    def run(self) :     
+
+    def run(self) :
         msg= 'Thread downloading %s started!\n From url: %s' %(self.filename,self.fileurl)
         try :
             urllib.urlretrieve(self.fileurl, self.filename,None)
@@ -93,13 +127,13 @@ class MyDownLoadThread(threading.Thread) :
         except:
             msg= 'failed to download'
 
-        
+
 class MyFilesDownloader():
     def __init__(self, urls, dir='.'):
         self.downurls = urls
         self.threads = []
         self.dir = dir
-        
+
     def startDownloadingFiles(self, multiThreading = False):
         if multiThreading == True :
             msg= 'In MULTITHREAD mode \nStart Downloading file into directory %s...' % self.dir
@@ -149,5 +183,26 @@ def TestDownload():
 
 
 if __name__ == '__main__':
-    TestDownload()
+    #TestDownload()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i","--input",type=str,help="input file")
+    parser.add_argument("-o","--output",type=str,help="Output directory")
+    #parser.add_argument("url",type=str,help="The Webpage")
+    args = parser.parse_args()
 
+    if args.output is not None:
+        dirname = args.output
+    else:
+        dirname = os.path.abspath('.')
+
+    if args.input is not None:
+        links = LinkFile().extractfrom(args.input)
+        downer = MyFilesDownloader(links,dirname)
+        downer.startDownloadingFiles()
+
+
+
+
+
+
+        #

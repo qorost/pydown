@@ -73,7 +73,7 @@ class MyLinksTreeWidget(QTreeWidget):
 		self.connect(self.actionUnselect,SIGNAL("triggered()"),self.unselect_link)
 		#support for multislection
 		self.setSelectionMode(QAbstractItemView.ExtendedSelection)
-		
+
 
 	def save_as(self):
 		#
@@ -86,14 +86,14 @@ class MyLinksTreeWidget(QTreeWidget):
 	def save_to(self):
 		"""down selected files to"""
 		self.targetfolder = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-			
+
 	def download_all_links(self):
 		links = []
 		count = self.count()
 		for i in range(0,count):
 			item = self.item[i]
 			links.append(item.text())
-		
+
 		if self.targetfolder == None:
 			self.save_to()
 		self.ctrapp.add_links(links,self.targetfolder)
@@ -103,15 +103,15 @@ class MyLinksTreeWidget(QTreeWidget):
 	def unselect_link(self):
 		"""unselect all selected links"""
 		selected = self.selectedItems()
-		for item in selected: 
+		for item in selected:
 			item.setSelected(False)
 
 	def download_links(self):
 		"""download a link and save as"""
-		#all 
+		#all
 		links = []
 		selected = self.selectedItems()
-		for item in selected: 
+		for item in selected:
 			links.append(item.text())
 		if self.targetfolder == None:
 			self.save_to()
@@ -143,7 +143,7 @@ class MyLinksTreeWidget(QTreeWidget):
 				citem.setText(3,link)
 				citem.setFlags(citem.flags() | Qt.ItemIsEditable)
 				root.addChild(citem)
-				count += 1	
+				count += 1
 		self.setUpdatesEnabled(True)
 		self.update()
 
@@ -188,14 +188,14 @@ class MyControlListWidget(QListWidget):
 	def save_to(self):
 		"""down selected files to"""
 		self.targetfolder = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-			
+
 	def download_all_links(self):
 		links = []
 		count = self.count()
 		for i in range(0,count):
 			item = self.item[i]
 			links.append(item.text())
-		
+
 		if self.targetfolder == None:
 			self.save_to()
 		self.ctrapp.add_links(links,self.targetfolder)
@@ -205,15 +205,15 @@ class MyControlListWidget(QListWidget):
 	def unselect_link(self):
 		"""unselect all selected links"""
 		selected = self.selectedItems()
-		for item in selected: 
+		for item in selected:
 			item.setSelected(False)
 
 	def download_links(self):
 		"""download a link and save as"""
-		#all 
+		#all
 		links = []
 		selected = self.selectedItems()
-		for item in selected: 
+		for item in selected:
 			links.append(item.text())
 		if self.targetfolder == None:
 			self.save_to()
@@ -232,7 +232,7 @@ class ControlApp(QWidget):
 		super(ControlApp,self).__init__()
 		self.mainwindows  = mainwindow
 		self.layout = QVBoxLayout()
-		
+
 		#1
 		self.btnlayout = QHBoxLayout()
 		self.urleditor = QLineEdit()
@@ -252,23 +252,23 @@ class ControlApp(QWidget):
 		self.choice4 = QCheckBox(FILE_TYPE[3])
 		#self.choiceall = QRadioButton("all")
 		self.btncheckall = QPushButton("All")
-		self.btncheckall.clicked.connect(self.check_all_types) 
+		self.btncheckall.clicked.connect(self.check_all_types)
 
 		self.typelayout.addWidget(self.choice1)
 		self.typelayout.addWidget(self.choice2)
 		self.typelayout.addWidget(self.choice3)
 		self.typelayout.addWidget(self.choice4)
 		self.typelayout.addWidget(self.btncheckall)
-		
+
 		self.layout.addLayout(self.typelayout)
 
 
 		#self.editor = QTextEdit()
 		#self.layout.addWidget(self.editor)
-		
+
 		#list widget
 		self.linkswidget = MyLinksTreeWidget(mainwindow)
-		
+
 		self.layout.addWidget(self.linkswidget)
 
 
@@ -306,7 +306,7 @@ class ControlApp(QWidget):
 
 		print patterns
 		#self.editor.
-		ffinder = FileFinder(patterns,url)
+		ffinder = FileFinder(url,filetypes = patterns)
 		links = list(ffinder.find())
 		self.linkswidget.add_links_to_widget(links)
 
@@ -321,7 +321,7 @@ class ControlApp(QWidget):
 			self.mainwindows.start_new_tab()
 		#check all links:
 		self.mainwindows.add_links_to_downapp(links,targetdir)
-	
+
 
 class MyDownListWidgetItem(QListWidgetItem):
 	def __init__(self):
@@ -356,7 +356,7 @@ class DownApp(QWidget):
 		self.downstatus = 0
 		self.mutex = Lock()
 
-	def add_a_link_to_list_widget(self,link):	
+	def add_a_link_to_list_widget(self,link):
 		newitem = QListWidgetItem(link)
 		self.downlistwidget.addItem(newitem)
 
