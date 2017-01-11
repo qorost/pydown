@@ -8,6 +8,7 @@ import sys
 import urllib2
 
 
+
 def get_url(url,value):
 	if value.startswith("http"):
 		return value
@@ -36,6 +37,7 @@ class LinkParser(HTMLParser):
 							return
 
 					for ftype in self.filetypes:
+						print name,value, type(value)
 						if value.endswith(ftype):
 							url = get_url(self.url,value)
 							self.foundfiles.add(url)
