@@ -3,3 +3,7 @@
 
 #tmp
 *.pyc
+
+build/
+dist/
+pydown.egg-info/

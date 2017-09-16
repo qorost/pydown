@@ -141,7 +141,7 @@ class MyFilesDownloader():
             print "\nDownloading finished, (Suc:%d,Fails:%d,Skipped,%d,Total:%d)" %(success,failures,skipped,num)
 
 
-def TestDownload():
+def test_download():
     filename = "5MB5MB.zip"
     url = "http://download.thinkbroadband.com/5MB.zip"
     xdown = Downloader(url,filename)
@@ -149,5 +149,5 @@ def TestDownload():
 
 
 if __name__ == '__main__':
-    TestDownload()
+    test_download()
 
