@@ -21,10 +21,14 @@ setup(
     url='https://github.com/kennethreitz/samplemod',
     license=license,
     packages=find_packages(exclude=('tests', 'docs')),
+    install_requires=[],
 
     entry_points={
         'console_scripts': [
             'pydown = pydown.__main__:main'
             ]
         },
+    zip_safe=False,
+    test_suite='nose.collector',
+    tests_require=['nose'],
 )

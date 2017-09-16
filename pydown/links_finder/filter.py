@@ -5,6 +5,7 @@ ADOBE = PDF + [".ps"]
 OFFICE = ["ppt", "pptx", "doc", "docx"]
 MEDIA = ["mp4", "bittorrent", "mp3"]
 DOCS = PDF + OFFICE
+ZIP = ["zip"]
 
 
 def filt_by_filetype(filetypes, value):
@@ -40,3 +41,6 @@ def filt_opentrain(value):
     filt the url for opentraining
     """
     return filt_by_domain("http://opensecuritytraining.info", value)
+
+def filt_opentrain_file(value):
+    return filt_by_filetype(ZIP, value)

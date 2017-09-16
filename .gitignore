@@ -4,6 +4,8 @@
 #tmp
 *.pyc
 
+*.json
+
 build/
 dist/
-pydown.egg-info/
+/*.egg-info/

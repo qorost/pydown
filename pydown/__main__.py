@@ -8,6 +8,7 @@ from .downloader import MyFilesDownloader
 from .links_finder.finder import FileFinder
 from .links_finder.finder import NewFileFinder
 from .links_finder.filter import *
+from .executor import *
 
 PDF = ["pdf"]
 ADOBE = PDF + [".ps"]
@@ -16,29 +17,7 @@ MEDIA = ["mp4", "bittorrent", "mp3"]
 DOCS = PDF + OFFICE
 
 
-def download_opentraining():
-    """
-    specially for downloading slides from opentraning
-    """
-    classurl = "http://opensecuritytraining.info/Training.html"
-    print "in download_opening"
-    ffinder = NewFileFinder(filt_opentrain, classurl)
-    print "NewFileFinder initialized"
-    links = list(ffinder.find())
-    print links
-    for url in links:
-        # make dir
-        dirname = url.split("/")[-1][:-5]
-        try:
-            os.mkdir(os.path.join("/home/huang/Desktop/opentrain/",dirname))
-        except Exception,e:
-            print str(e)
-        # download file to
-        subffinder = NewFileFinder(filt_by_pdf, url)
-        links = list(subffinder.find())
-        downer = MyFilesDownloader(links, dirname)
-        downer.startDownloadingFiles()
-        break
+
 
 
 def main():
@@ -71,7 +50,7 @@ def main():
         elif args.filter == "media":
             filetypes = MEDIA
         elif args.filter == "open":
-            download_opentraining()
+            download_opentrain_from_json("/home/huang/Desktop/opentrain/result.json")
             return
 
         ffinder = FileFinder(filetypes, args.url)
