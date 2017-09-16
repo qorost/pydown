@@ -3,5 +3,9 @@
 
 #tmp
 *.pyc
-*.txt
-RefDocs/
+
+*.json
+
+build/
+dist/
+/*.egg-info/

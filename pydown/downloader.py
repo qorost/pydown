@@ -175,7 +175,7 @@ class MyFilesDownloader():
             print "\nDownloading finished, (Suc:%d,Fails:%d,Skipped,%d,Total:%d)" %(success,failures,skipped,num)
 
 
-def TestDownload():
+def test_download():
     filename = "5MB5MB.zip"
     url = "http://download.thinkbroadband.com/5MB.zip"
     xdown = Downloader(url,filename)
@@ -183,26 +183,6 @@ def TestDownload():
 
 
 if __name__ == '__main__':
-    #TestDownload()
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-i","--input",type=str,help="input file")
-    parser.add_argument("-o","--output",type=str,help="Output directory")
-    #parser.add_argument("url",type=str,help="The Webpage")
-    args = parser.parse_args()
-
-    if args.output is not None:
-        dirname = args.output
-    else:
-        dirname = os.path.abspath('.')
-
-    if args.input is not None:
-        links = LinkFile().extractfrom(args.input)
-        downer = MyFilesDownloader(links,dirname)
-        downer.startDownloadingFiles()
-
-
-
-
-
+    test_download()
 
         #

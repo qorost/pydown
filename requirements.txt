@@ -1,4 +1,3 @@
-beautifullsoup4
 lxml
 html5lib
 pyside
